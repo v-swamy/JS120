@@ -8,7 +8,6 @@ function createPlayer() {
   };
 }
 
-// eslint-disable-next-line max-lines-per-function
 function createComputer() {
   let playerObject = createPlayer();
   let computerObject = {
