@@ -15,7 +15,6 @@ function createComputer() {
       let cumulativeWeights = [];
       this.choiceWeights.forEach((weight, idx) => cumulativeWeights.push(weight
         + (cumulativeWeights[idx - 1] || 0)));
-
       let random = Math.random() *
         cumulativeWeights[cumulativeWeights.length - 1];
 
