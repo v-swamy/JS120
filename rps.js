@@ -134,8 +134,6 @@ const RPSGame = {
       console.log(`You've scored ${this.pointsToWin} points to win the match!`);
     } else if (this.score.computer === this.pointsToWin) {
       console.log(`Computer has scored ${this.pointsToWin} points to win the match!`);
-    } else if (this.score.human === 5 && this.score.computer === 5) {
-      console.log(`You and the computer have both scored ${this.pointsToWin} to tie the match!`);
     }
     this.printDivider();
   },
