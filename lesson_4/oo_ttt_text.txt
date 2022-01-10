@@ -1,0 +1,42 @@
+1.)  Write a textual description of game
+
+-  Tic Tac Toe requires 2 players
+-  It is a board game
+-  The board is a 3 x 3 grid
+-  Players take turns marking squares with X or O
+-  3 in a row wins
+-  3 in a row can be horizontal, vertical, or diagonal
+-  1 human and 1 computer
+-  Human goes first
+
+2.)  Identify nouns and verbs
+
+board
+game
+square
+grid
+row
+marker
+turn
+player
+human
+computer
+
+play
+mark
+move
+place
+
+3.)  Organize 
+
+game
+board
+row
+square
+marker
+player
+- mark
+- play
+- human
+- computer
+
