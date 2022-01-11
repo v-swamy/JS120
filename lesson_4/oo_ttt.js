@@ -213,8 +213,12 @@ class TTTGame {
   computerMoves() {
     let choice;
 
-    if (this.threatExists()) {
-      choice = this.findSquareToDefend();
+    if (this.winExistsFor(this.computer)) {
+      choice = this.findSquareToWin(this.computer);
+    } else if (this.winExistsFor(this.human)) {
+      choice = this.findSquareToWin(this.human);
+    } else if (this.board.squares["5"].isUnused()) {
+      choice = "5";
     } else {
       let validChoices = this.board.unusedSquares();
       do {
@@ -239,19 +243,26 @@ class TTTGame {
     });
   }
 
-  threatExists() {
-    return !!this.findSquareToDefend();
+  winExistsFor(player) {
+    return !!this.findSquareToWin(player);
   }
 
-  findSquareToDefend() {
-    let rowsWithThreat = TTTGame.POSSIBLE_WINNING_ROWS.filter(row => {
-      return this.board.countMarkersFor(this.human, row) === 2 &&
-             this.board.countMarkersFor(this.computer, row) === 0;
+  findSquareToWin(player) {
+    let opponent;
+    if (player === this.human) {
+      opponent = this.computer;
+    } else {
+      opponent = this.human;
+    }
+
+    let rowsWithWin = TTTGame.POSSIBLE_WINNING_ROWS.filter(row => {
+      return this.board.countMarkersFor(player, row) === 2 &&
+             this.board.countMarkersFor(opponent, row) === 0;
     });
-    if (rowsWithThreat.length) {
-      let row = rowsWithThreat[0];
-      let threat = row.filter(key => this.board.squares[key].isUnused());
-      return threat[0];
+    if (rowsWithWin.length) {
+      let row = rowsWithWin[0];
+      let win = row.find(key => this.board.squares[key].isUnused());
+      return win;
     } else return null;
   }
 }
