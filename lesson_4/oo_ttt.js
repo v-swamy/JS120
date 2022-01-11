@@ -133,8 +133,19 @@ class TTTGame {
 
   play() {
     this.displayWelcomeMessage();
-
     this.board.display();
+
+    while (true) {
+      this.playGame();
+      if (!this.playAgain()) break;
+      this.board = new Board();
+      this.board.displayWithClear();
+    }
+
+    this.displayGoodbyeMessage();
+  }
+
+  playGame() {
     while (true) {
       this.humanMoves();
       if (this.gameOver()) break;
@@ -147,7 +158,19 @@ class TTTGame {
 
     this.board.displayWithClear();
     this.displayResults();
-    this.displayGoodbyeMessage();
+  }
+
+  playAgain() {
+    let response;
+    while (true) {
+      response = readline.question("Would you like to play again? (y/n)").toLowerCase();
+      if (response === 'y') {
+        return true;
+      } else if (response === 'n') {
+        return false;
+      }
+      console.log("Invalid response.");
+    }
   }
 
   displayWelcomeMessage() {
@@ -188,12 +211,16 @@ class TTTGame {
   }
 
   computerMoves() {
-    let validChoices = this.board.unusedSquares();
     let choice;
 
-    do {
-      choice = Math.floor((9 * Math.random()) + 1).toString();
-    } while (!validChoices.includes(choice));
+    if (this.threatExists()) {
+      choice = this.findSquareToDefend();
+    } else {
+      let validChoices = this.board.unusedSquares();
+      do {
+        choice = Math.floor((9 * Math.random()) + 1).toString();
+      } while (!validChoices.includes(choice));
+    }
 
     this.board.markSquareAt(choice, this.computer.getMarker());
   }
@@ -210,6 +237,22 @@ class TTTGame {
     return TTTGame.POSSIBLE_WINNING_ROWS.some(row => {
       return this.board.countMarkersFor(player, row) === 3;
     });
+  }
+
+  threatExists() {
+    return !!this.findSquareToDefend();
+  }
+
+  findSquareToDefend() {
+    let rowsWithThreat = TTTGame.POSSIBLE_WINNING_ROWS.filter(row => {
+      return this.board.countMarkersFor(this.human, row) === 2 &&
+             this.board.countMarkersFor(this.computer, row) === 0;
+    });
+    if (rowsWithThreat.length) {
+      let row = rowsWithThreat[0];
+      let threat = row.filter(key => this.board.squares[key].isUnused());
+      return threat[0];
+    } else return null;
   }
 }
 
