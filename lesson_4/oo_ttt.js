@@ -218,9 +218,9 @@ class TTTGame {
   }
 
   displayMatchWinner() {
-    if (this.human.getScore() === 3) {
+    if (this.human.getScore() === this.WINS_PER_MATCH) {
       console.log("You won the match!  Woo hoo!");
-    } else if (this.computer.getScore() === 3) {
+    } else if (this.computer.getScore() === this.WINS_PER_MATCH) {
       console.log("I won the match!  Muah ha ha!");
     }
   }
@@ -328,7 +328,8 @@ class TTTGame {
   }
 
   matchisWon() {
-    if (this.human.getScore() === 3 || this.computer.getScore() === 3) {
+    if (this.human.getScore() === this.WINS_PER_MATCH ||
+        this.computer.getScore() === this.WINS_PER_MATCH) {
       return true;
     }
     return false;
