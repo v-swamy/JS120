@@ -151,6 +151,8 @@ class TwentyOneGame {
     this.winner = null;
   }
 
+  static MIN_DECK_SIZE = 20;
+
   start() {
     this.displayWelcomeMessage();
     while (true) {
@@ -173,7 +175,7 @@ class TwentyOneGame {
   }
 
   dealCards() {
-    if (this.deck.cards.length < 20) {
+    if (this.deck.cards.length < TwentyOneGame.MIN_DECK_SIZE) {
       let newDeck = new Deck();
       this.deck.cards = this.deck.cards.concat(newDeck.cards);
     }
